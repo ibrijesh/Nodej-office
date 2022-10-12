@@ -1,4 +1,3 @@
-const config = require("config");
 const Joi = require("joi");
 const mongoose = require("mongoose");
 
@@ -91,9 +90,9 @@ const movieSchema = new mongoose.Schema({
 });
 
 
-const User = mongoose.model("User", userSchema);
+const Movie = mongoose.model("Movie", movieSchema);
 
-function validateUser(user) {
+function validateMovie(movie) {
 
   const schema = Joi.object({
     movieName: Joi.string()
@@ -102,36 +101,49 @@ function validateUser(user) {
     .required(),
     Year: Joi.string()
       .required(),
-    Released: Joi.string().length(10)
-    .pattern(/^[0-9]+$/).required(),
-    password: Joi.string()
-      .min(5)
-      .max(255)
-      .required()
+    Released: Joi.string()
+    .required(),
+    Runtime: Joi.string()
+    .required(),
+    Director: Joi.string()
+    .required(),
+    Writer: Joi.string()
+    .required(),
+    Language: Joi.string()
+    .required(),
+    Country: Joi.string()
+    .required(),
+    Awards: Joi.string()
+    .required(),
+    Metascore: Joi.string()
+    .required(),
+    imdbRating: Joi.string()
+    .required(),
+    Plot: Joi.string()
+    .required(),
+    imagePath: Joi.string()
+    .required(),
+    Genre: Joi.string()
+    .required(),
+    Actors: Joi.string()
+    .required(),
   });
 
-  return schema.validate(user);
+  return schema.validate(movie);
 }
 
 
-function validateUserLogin(user) {
+function validateMovieId(movie) {
 
   const schema = Joi.object({
-    email: Joi.string()
-    .min(5)
-    .max(255)
+    _id: Joi.string()
     .required()
-    .email(),
-    password: Joi.string()
-      .min(5)
-      .max(255)
-      .required()
   });
 
-  return schema.validate(user);
+  return schema.validate(movie);
 }
 
 
 exports.User = User;
-exports.validate = validateUser;
-exports.validateLogin = validateUserLogin;
+exports.validateMovie = validateMovie;
+exports.validateMovieId = validateMovieId;
